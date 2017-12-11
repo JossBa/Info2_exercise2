@@ -1,0 +1,58 @@
+package de.htw.app;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.Iterator;
+import java.util.Scanner;
+
+/**
+ * An utility class, that is read in the data for the exercise.
+ * 
+ * <ul>
+ * <li>name
+ * <li>date
+ * </ul>
+ * <p>
+ * 
+ * @author Erik Mautsch
+ *
+ */
+
+class ReadAllFromUrl {
+	@SuppressWarnings("resource")
+	public static void main(String[] args) {
+		
+		String a = args[0];
+		String b = args[1];
+	
+		int wordCounter = 1;
+		
+		InputStream is = null;
+		try {
+			URL url = new URL("http://home.htw-berlin.de/~mautsch/dictionary_english.txt");
+			is = url.openStream();		
+			Scanner scan = new Scanner(is);
+			
+			while (scan.hasNext()){
+			a = scan.useDelimiter("\\Z").nextLine();
+			if(a.equals("algo")){
+				System.out.println(a + " matches in line: " + wordCounter);
+			}
+			else if(a.contains("algo" + "")){
+				System.out.println(a + " contains in line: " + wordCounter);
+			}
+			wordCounter++;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (is != null)
+				try {
+					is.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		}
+	}
+}
