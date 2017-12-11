@@ -1,0 +1,62 @@
+package de.htw.app;
+
+public class LevenshteinDistance {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		String compareS = " " + "elephant";
+		String inputS = " " + "hippo";
+
+		char[] compare = compareS.toCharArray();
+		char[] input = inputS.toCharArray();
+
+		int[][] tableau = new int[compare.length][input.length];
+
+		// Matrix füllen
+		for (int x = 0; x < tableau.length; x++) {
+			tableau[x][0] = x;
+		}
+		for (int y = 0; y < tableau[0].length; y++) {
+			tableau[0][y] = y;
+		}
+
+		// ausprinten
+		for (int z = 0; z < tableau.length; z++) {
+			System.out.println();
+			for (int q = 0; q < tableau[z].length; q++) {
+				System.out.print(tableau[z][q] + " ");
+			}
+		}
+
+		for (int z = 1; z < tableau.length; z++) {
+			for (int q = 1; q < tableau[z].length; q++) {
+
+				if (compare[z] == input[q]) {
+					tableau[z][q] = minimum(tableau[z - 1][q], tableau[z][q - 1], tableau[z - 1][q - 1]);
+				} else {
+					tableau[z][q] = minimum(tableau[z - 1][q], tableau[z][q - 1], tableau[z - 1][q - 1]) + 1;
+				}
+			}
+		}
+
+		for (int z = 0; z < tableau.length; z++) {
+			System.out.println();
+			for (int q = 0; q < tableau[z].length; q++) {
+				System.out.print(tableau[z][q] + " ");
+			}
+		}
+		
+		System.out.println("\nLevi Distance ist: " + LevinshteinDistance(tableau));
+
+	}
+
+	public static int minimum(int x, int y, int z) {
+		return Math.min(Math.min(x, y), z);
+
+	}
+	
+	public static int LevinshteinDistance(int [][] tableau){
+		return tableau[tableau.length-1][tableau[0].length-1];
+	}
+}
